@@ -178,3 +178,5 @@ frontend/
   improving the model — e.g. as few-shot exemplars or a fine-tuning set.
 - `npm audit` flags the esbuild/Vite dev-server advisory (dev-only, fixing it
   is a major-version bump); it does not affect the built app or the backend.
+#   G e n _ A i _ P r o j e c t  
+ 
