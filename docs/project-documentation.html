@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AI-Powered Content Moderation Pipeline — Project Documentation</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1c2533; font-size: 11pt; line-height: 1.5; margin: 0;
+  }
+  h1, h2, h3 { color: #102a43; line-height: 1.25; }
+  h1 { font-size: 24pt; margin: 0 0 4px; }
+  h2 {
+    font-size: 15pt; margin: 26px 0 8px; padding-bottom: 5px;
+    border-bottom: 2px solid #4f9cf9;
+  }
+  h3 { font-size: 12pt; margin: 16px 0 4px; color: #1f4068; }
+  p { margin: 6px 0; }
+  ul, ol { margin: 6px 0; padding-left: 22px; }
+  li { margin: 3px 0; }
+  code {
+    background: #eef2f7; padding: 1px 5px; border-radius: 4px;
+    font-family: "Consolas", monospace; font-size: 9.5pt; color: #b2295a;
+  }
+  .cover {
+    background: linear-gradient(135deg, #102a43 0%, #1f4068 60%, #2e5a8a 100%);
+    color: #fff; padding: 44px 38px; border-radius: 14px; margin-bottom: 26px;
+  }
+  .cover h1 { color: #fff; }
+  .cover .shield { font-size: 46px; }
+  .cover .sub { font-size: 12.5pt; opacity: .9; margin-top: 6px; }
+  .cover .meta { margin-top: 18px; font-size: 10pt; opacity: .85; }
+  .pill {
+    display: inline-block; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+    padding: 3px 10px; border-radius: 20px; font-size: 9pt; margin: 3px 4px 0 0;
+  }
+  .lead { font-size: 11.5pt; color: #334e68; }
+  .box {
+    background: #f6f9fc; border: 1px solid #d9e2ec; border-left: 4px solid #4f9cf9;
+    border-radius: 8px; padding: 12px 16px; margin: 12px 0;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 10pt; }
+  th, td { text-align: left; padding: 7px 9px; border-bottom: 1px solid #d9e2ec; vertical-align: top; }
+  th { background: #102a43; color: #fff; }
+  tr:nth-child(even) td { background: #f6f9fc; }
+  .flow {
+    background: #0f1b2d; color: #d6e4ff; font-family: "Consolas", monospace;
+    font-size: 8.7pt; line-height: 1.45; padding: 16px; border-radius: 10px;
+    white-space: pre; overflow: hidden; margin: 12px 0;
+  }
+  .tag { display:inline-block; padding:2px 8px; border-radius:5px; font-size:8.5pt; font-weight:700; }
+  .t-block { background:#fde8e8; color:#c0392b; }
+  .t-review { background:#fbf3dd; color:#a06a00; }
+  .t-allow { background:#e3f6e9; color:#1e7d3c; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { background:#fff; border:1px solid #d9e2ec; border-radius:8px; padding:12px 14px; }
+  .card h3 { margin-top: 0; }
+  .muted { color: #627d98; font-size: 9.5pt; }
+  .page-break { page-break-before: always; }
+  footer { margin-top: 28px; padding-top: 10px; border-top: 1px solid #d9e2ec; color:#829ab1; font-size: 9pt; }
+</style>
+</head>
+<body>
+
+  <div class="cover">
+    <div class="shield">🛡️</div>
+    <h1>AI-Powered Content Moderation Pipeline</h1>
+    <div class="sub">Scale trust &amp; safety without scaling the moderation team linearly.</div>
+    <div>
+      <span class="pill">Multi-category classification</span>
+      <span class="pill">Context-aware analysis</span>
+      <span class="pill">Confidence-based routing</span>
+      <span class="pill">Explainable decisions</span>
+      <span class="pill">Human review queue</span>
+      <span class="pill">Per-platform policy</span>
+    </div>
+    <div class="meta">
+      Assignment 10 · Trust &amp; Safety &nbsp;|&nbsp; Stack: TypeScript / Node (Express) + React (Vite) &nbsp;|&nbsp; AI: Claude API (claude-opus-4-8)
+    </div>
+  </div>
+
+  <h2>1. What is this project?</h2>
+  <p class="lead">
+    This is a <strong>multi-stage content-moderation pipeline</strong> that decides, automatically and at scale,
+    whether a piece of user-generated content is safe to publish, should be blocked, or needs a human to look at it.
+  </p>
+  <p>
+    Content moderation at scale is an unsolved operational problem. Simple keyword filters and naive classifiers
+    produce far too many false positives, can't tell the difference between a genuine threat and friendly banter,
+    and give no auditable reason for their decisions. This system addresses all three: it uses a large language
+    model (Claude) for nuanced, context-aware classification, a <em>tunable</em> policy engine so every platform can
+    set its own bar, and an <em>explainable</em> decision record that users and legal teams can audit.
+  </p>
+
+  <h2>2. What is it used for? (Use cases)</h2>
+  <ul>
+    <li><strong>Social platforms &amp; forums</strong> — automatically screen posts, comments, and messages for harmful content before they reach other users.</li>
+    <li><strong>Reducing moderator workload</strong> — clear violations are actioned automatically; only genuinely ambiguous cases reach a human, so the team scales sub-linearly with content volume.</li>
+    <li><strong>Multi-tenant / white-label products</strong> — one engine serves many platforms, each with its own policy (a children's app and an adult community need very different rules).</li>
+    <li><strong>Auditable / compliant moderation</strong> — every decision stores the exact offending text, the harm category, and the reasoning, so it can be defended to users, regulators, or legal teams.</li>
+    <li><strong>A feedback loop for model improvement</strong> — human reviewers' final calls are captured as labelled data to improve the classifier over time.</li>
+  </ul>
+
+  <h2>3. The seven harm categories</h2>
+  <p>Every piece of content is scored, with a confidence value, against each of these categories:</p>
+  <table>
+    <tr><th>Category</th><th>What it catches</th></tr>
+    <tr><td>Hate speech</td><td>Attacks or dehumanisation based on a protected attribute (race, religion, gender, etc.).</td></tr>
+    <tr><td>Harassment</td><td>Targeted bullying, threats, intimidation, or doxxing aimed at an individual.</td></tr>
+    <tr><td>Spam</td><td>Scams, mass advertising, link-farming, unsolicited promotion.</td></tr>
+    <tr><td>Misinformation</td><td>Demonstrably false or dangerous claims (health, elections, safety).</td></tr>
+    <tr><td>Graphic violence</td><td>Vivid depictions or glorification of gore or physical harm.</td></tr>
+    <tr><td>Adult content</td><td>Sexually explicit material or solicitation.</td></tr>
+    <tr><td>Self-harm</td><td>Content encouraging, instructing, or expressing intent toward suicide or self-injury.</td></tr>
+  </table>
+
+  <div class="page-break"></div>
+
+  <h2>4. How it works</h2>
+  <p>Content flows through four stages. Crucially, <strong>only the first stage calls the AI model</strong> — everything
+     after it is pure, deterministic code, which makes the system fast, cheap to re-run, predictable, and easy to test.</p>
+
+  <div class="flow">           ┌─────────────────────────────────────────────────────────────┐
+content ─▶ │ 1. CLASSIFIER  (Claude / claude-opus-4-8)                     │
++ context  │    per-category confidence + exact offending span             │
+           │    judged IN CONTEXT (platform, author history, thread)       │
+           └──────────────────────────┬──────────────────────────────────┘
+                                       ▼
+           ┌─────────────────────────────────────────────────────────────┐
+           │ 2. POLICY ENGINE  (per-platform, deterministic)              │
+           │    category on/off · review threshold · block threshold      │
+           │    · custom keyword rules                                    │
+           └──────────────────────────┬──────────────────────────────────┘
+                                       ▼
+           ┌─────────────────────────────────────────────────────────────┐
+           │ 3. CONFIDENCE ROUTER                                         │
+           │    confidence ≥ block   →  AUTO-BLOCK                        │
+           │    review ≤ conf < block →  HUMAN REVIEW QUEUE              │
+           │    confidence < review  →  AUTO-ALLOW                        │
+           └──────────────────────────┬──────────────────────────────────┘
+                                       ▼
+   4. EXPLAINABLE DECISION  (segment + category + reasoning + threshold fired)
+                                       ▼
+        human reviewer can override  →  saved as labelled feedback</div>
+
+  <h3>Stage 1 — Context-aware classification</h3>
+  <p>The content, plus its <em>context</em> (which platform, the author's history, the conversation thread), is sent to
+     Claude. The model returns a structured result: for each detected harm category a confidence score (0–1), a severity,
+     the <strong>verbatim offending segment</strong>, and a one-line reason. Context matters enormously —
+     <code>"I'm going to kill you"</code> between friends after a game is banter, but the same words sent to a stranger on a
+     children's platform is a credible threat. The model is told to weigh exactly that.</p>
+
+  <h3>Stage 2 — Policy engine (the tunable part)</h3>
+  <p>Each platform has its own policy: every category can be turned on/off and has two thresholds — a
+     <em>review</em> threshold and an <em>auto-block</em> threshold — plus optional custom keyword rules. The same
+     classification result produces different outcomes under different policies.</p>
+
+  <h3>Stage 3 — Confidence-based routing</h3>
+  <table>
+    <tr><th>Model confidence vs. policy</th><th>Routing</th></tr>
+    <tr><td>≥ auto-block threshold</td><td><span class="tag t-block">AUTO-BLOCK</span> — actioned automatically</td></tr>
+    <tr><td>between review and block</td><td><span class="tag t-review">HUMAN REVIEW</span> — sent to the queue</td></tr>
+    <tr><td>&lt; review threshold</td><td><span class="tag t-allow">AUTO-ALLOW</span> — published</td></tr>
+  </table>
+
+  <h3>Stage 4 — Explainable decision &amp; human review</h3>
+  <p>Every decision is stored with the offending segment highlighted, the category, the model's reasoning, and exactly
+     which threshold or rule fired. Items routed to review appear in a moderator queue with the full context and the AI's
+     recommendation; the reviewer's final call is recorded — and any disagreement with the AI is captured as labelled
+     feedback for improving the model.</p>
+
+  <div class="page-break"></div>
+
+  <h2>5. Example: same words, different context &amp; policy</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Context decides</h3>
+      <p class="muted">Statement: “I'm going to kill you, you're dead next round.”</p>
+      <p>• Gaming voice chat between friends → <span class="tag t-allow">ALLOW</span></p>
+      <p>• DM to a 12-year-old after an argument, sender has prior strikes → <span class="tag t-block">BLOCK / REVIEW</span></p>
+    </div>
+    <div class="card">
+      <h3>Policy decides</h3>
+      <p class="muted">Statement: an explicit adult short story.</p>
+      <p>• Adult / Mature community (adult content disabled) → <span class="tag t-allow">ALLOW</span></p>
+      <p>• Children's platform (strict thresholds) → <span class="tag t-block">BLOCK</span></p>
+    </div>
+  </div>
+
+  <h2>6. Technology used</h2>
+  <table>
+    <tr><th>Layer</th><th>Technology</th><th>Why</th></tr>
+    <tr><td>Language</td><td>TypeScript</td><td>Type-safe across backend and frontend; one shared domain model.</td></tr>
+    <tr><td>AI model</td><td>Claude API — <code>claude-opus-4-8</code></td><td>Nuanced, context-aware classification with adaptive thinking.</td></tr>
+    <tr><td>AI integration</td><td>@anthropic-ai/sdk + structured outputs (Zod)</td><td>Forces the model to return schema-valid JSON — no brittle parsing.</td></tr>
+    <tr><td>Backend</td><td>Node.js + Express</td><td>Lightweight REST API hosting the pipeline.</td></tr>
+    <tr><td>Validation</td><td>Zod</td><td>Validates API requests and the model's structured output.</td></tr>
+    <tr><td>Frontend</td><td>React + Vite</td><td>Fast, interactive dashboard for moderation, the review queue, and policy config.</td></tr>
+    <tr><td>Storage</td><td>In-memory store</td><td>Dependency-free and resettable for the demo (swappable for SQLite/Postgres).</td></tr>
+  </table>
+
+  <h2>7. What was built (components)</h2>
+  <ul>
+    <li><strong>Classifier</strong> — Claude call with a context-aware prompt and structured output.</li>
+    <li><strong>Policy engine</strong> — applies per-platform thresholds + custom rules, produces explainable per-flag decisions.</li>
+    <li><strong>Pipeline + router</strong> — orchestrates classify → policy → route → store.</li>
+    <li><strong>REST API</strong> — endpoints for moderation, the review queue, reviews/feedback, and policy management.</li>
+    <li><strong>React dashboard</strong> — three screens: <em>Moderate</em> (submit + see explained decision), <em>Review queue</em> (moderator workspace with overrides), <em>Policies</em> (sliders, toggles, custom rules).</li>
+    <li><strong>Evaluation harness</strong> — a labelled test set + runner that checks every success metric (classification coverage, context-sensitivity, routing, explainability, policy sensitivity).</li>
+  </ul>
+
+  <h2>8. How the success metrics are met</h2>
+  <table>
+    <tr><th>Requirement</th><th>How it's satisfied</th></tr>
+    <tr><td>Identifies all harm categories</td><td>Seven-category classifier; labelled test set covers each + clean controls.</td></tr>
+    <tr><td>Same statement, two contexts</td><td>Identical text in banter vs. threat context yields different actions.</td></tr>
+    <tr><td>Correct routing</td><td>Clear violations auto-block, clean content auto-allows, ambiguous goes to the queue.</td></tr>
+    <tr><td>Explainability</td><td>Every flag cites the verbatim offending segment + category + reasoning.</td></tr>
+    <tr><td>Policy changes behaviour</td><td>Identical content allowed on the adult platform, blocked on the children's platform.</td></tr>
+  </table>
+
+  <h2>9. How to run it</h2>
+  <div class="box">
+    <p><strong>Backend:</strong> <code>cd backend</code> → <code>npm install</code> → copy <code>.env.example</code> to <code>.env</code> and add your <code>ANTHROPIC_API_KEY</code> → <code>npm run dev</code> (port 4000).</p>
+    <p><strong>Frontend:</strong> <code>cd frontend</code> → <code>npm install</code> → <code>npm run dev</code> → open <code>http://localhost:5173</code>.</p>
+    <p><strong>Prove the metrics:</strong> <code>cd backend</code> → <code>npm run evaluate</code> (runs the labelled set through the real pipeline and reports pass/fail).</p>
+  </div>
+
+  <footer>
+    AI-Powered Content Moderation Pipeline — Assignment 10, Trust &amp; Safety. Built with TypeScript, Node/Express,
+    React/Vite, and the Claude API (claude-opus-4-8).
+  </footer>
+
+</body>
+</html>

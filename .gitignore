@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+.vite/
+
+# Secrets — NEVER commit a real API key
+.env
+.env.local
+*.local
+
+# Logs / OS junk
+*.log
+.DS_Store
+Thumbs.db
