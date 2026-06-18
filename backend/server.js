@@ -10,6 +10,11 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '1mb' }));
 
+// Root route
+app.get('/', (_req, res) => {
+  res.json({ status: 'AI Content Moderation API is running', docs: '/api/health' });
+});
+
 // Health check endpoint
 app.get('/api/health', (_req, res) => {
   res.json({
