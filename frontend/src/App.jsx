@@ -6,12 +6,13 @@ import SubmitContent from './pages/SubmitContent.jsx';
 import ReviewQueue from './pages/ReviewQueue.jsx';
 import PolicySettings from './pages/PolicySettings.jsx';
 
+import { api } from './api.js';
+
 export default function App() {
   const [health, setHealth] = useState(null);
 
   useEffect(() => {
-    fetch('/api/health')
-      .then((r) => r.json())
+    api.health()
       .then(setHealth)
       .catch(() => setHealth({ ok: false }));
   }, []);

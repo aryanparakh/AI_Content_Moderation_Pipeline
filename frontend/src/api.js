@@ -1,7 +1,6 @@
 /** Thin fetch wrapper — all API calls go through here. */
 
-const API_BASE_URL =
-  "https://ai-content-moderation-pipeline.onrender.com";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://ai-content-moderation-pipeline.onrender.com";
 
 async function req(url, options = {}) {
   const res = await fetch(`${API_BASE_URL}${url}`, {
