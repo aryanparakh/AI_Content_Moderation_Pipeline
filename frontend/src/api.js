@@ -1,7 +1,10 @@
 /** Thin fetch wrapper — all API calls go through here. */
 
+const API_BASE_URL =
+  "https://ai-content-moderation-pipeline.onrender.com";
+
 async function req(url, options = {}) {
-  const res = await fetch(url, {
+  const res = await fetch(`${API_BASE_URL}${url}`, {
     ...options,
     headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
   });
