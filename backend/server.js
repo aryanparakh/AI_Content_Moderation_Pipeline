@@ -8,10 +8,18 @@ import { policiesRouter } from './routes/policies.js';
 
 const app = express();
 
-// Configure CORS to allow frontend domain
-const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:5173';
+// Configure CORS to allow frontend domains
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://ai-content-moderation-pipeline-1.onrender.com'
+];
+
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
 app.use(cors({
-  origin: allowedOrigin,
+  origin: allowedOrigins,
   credentials: true,
 }));
 
